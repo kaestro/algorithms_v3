@@ -55,6 +55,25 @@ class Solution:
             current_node = current_node.right
 
         return new_root
+    
+
+    # 따로 리스트에다가 저장한 뒤 트리를 만들지 않고, 바로 트리를 편다.
+    def exemplary_increasingBST(self, root: TreeNode) -> TreeNode:
+        if root is None:
+            return None
+
+        def inorder_traversal(node):
+            if node is None:
+                return
+            
+            inorder_traversal(node.left)
+            self.current_node.right = TreeNode(node.val)
+            self.current_node = self.current_node.right
+            inorder_traversal(node.right)
+        
+        new_root = self.current_node = TreeNode()
+        inorder_traversal(root)
+        return new_root.right
 
 
 if __name__ == "__main__":
