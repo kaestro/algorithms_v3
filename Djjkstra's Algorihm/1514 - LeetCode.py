@@ -10,10 +10,6 @@ class Solution:
         # Create graph
         graph = defaultdict(dict)
         for i, (a, b) in enumerate(edges):
-            if a not in graph:
-                graph[a] = {}
-            if b not in graph:
-                graph[b] = {}
             graph[a][b] = succProbability[i]
             graph[b][a] = succProbability[i]
         
