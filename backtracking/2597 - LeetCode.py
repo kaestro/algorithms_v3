@@ -15,6 +15,8 @@ class Solution:
     # backtrack을 통해 새로운 set을 만들어나가는 방식으로 해결할 수 있을 것이다.
     # 이 때 저장하는 자료구조는 list가 아닌 set을 사용하면 순회가 아니라 O(1)의
     # 시간복잡도로 찾을 수 있다.
+
+    # BackTrack의 순회 자체의 시간복잡도는 O(2^n)이다. => 감당 가능?
     def beautifulSubsets(self, nums: List[int], target_diff: int) -> int:
         countedSubsets = []
         def backTrack(nums: List[int], idx: int, subset: Set[int], target_diff: int) -> int:
