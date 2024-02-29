@@ -37,7 +37,4 @@ def solution(bandage: List[int], max_health: int, attacks: List[List[int]]) -> i
 
         current_health = min(current_health, max_health)
 
-
-
-
     return current_health
