@@ -4,12 +4,12 @@ def solution(wall_length: int, roller_length: int, section_list: List[int]) -> i
     answer = 0
     section_dict = {section - 1: 1 for section in section_list}
 
-    while section_dict:
-        min_section = min(section_dict)
-        to_delete = [i for i in range(min_section, min(min_section + roller_length, wall_length)) if i in section_dict]
-        for i in to_delete:
-            del section_dict[i]
-        answer += 1
+    for section in sorted(section_dict):
+        if section_dict[section] == 0:
+            for i in range(section, min(section + roller_length, wall_length)):
+                if i in section_dict:
+                    section_dict[i] = 1
+            answer += 1
 
     return answer
 
