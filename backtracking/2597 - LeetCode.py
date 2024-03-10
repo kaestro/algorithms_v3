@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/the-number-of-beautiful-subsets/description/
 from typing import List
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 
 class Solution:
@@ -31,11 +31,29 @@ class Solution:
                 else:
                     return 1
 
-            cnt = backTrack(nums, idx + 1, num_cnt.copy(), target_diff)
-            if num_cnt[target_diff + nums[idx]] == 0 and num_cnt[nums[idx] - target_diff] == 0:
-                num_cnt[nums[idx]] += 1
+            cnt = backTrack(nums, idx + 1, num_cnt, target_diff)
+
+            current_num = nums[idx]
+            if num_cnt[target_diff + current_num] == 0 and num_cnt[current_num - target_diff] == 0:
+                num_cnt[current_num] += 1
                 cnt += backTrack(nums, idx + 1, num_cnt, target_diff)
-                num_cnt[nums[idx]] -= 1
+                num_cnt[current_num] -= 1
             return cnt
         
         return backTrack(nums, 0, defaultdict(int), target_diff)
+    
+    def countPairsWithDiff(self, nums: List[int], diff: int) -> int:
+        num_counts = Counter(nums)
+
+        def calculate_dp(num):
+            if (num - diff) in num_counts:
+                num_not_included_pair_count, num_included_pair_count = calculate_dp(num - diff)
+            else:
+                num_not_included_pair_count, num_included_pair_count = 1, 0
+            return num_not_included_pair_count + num_included_pair_count, num_not_included_pair_count * (pow(2, num_counts[num]) - 1)
+
+        total = 1
+        for num in num_counts:
+            if not num_counts[num + diff]:
+                total *= sum(calculate_dp(num))
+        return total - 1
