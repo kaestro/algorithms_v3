@@ -8,8 +8,22 @@ class Solution:
 
         num_idx = len(nums) - 1
         while len(target_collection) > 0:
-            if nums[num_idx] in target_collection:
-                target_collection.remove(nums[num_idx])
+            target_collection.discard(nums[num_idx])
             num_idx -= 1
 
         return len(nums) - num_idx - 1
+    
+    def better_minOperations(self, nums: List[int], k: int) -> int:
+        occurrenceSet = set()
+        minOperations = 0
+
+        for num in reversed(nums):
+            if num <= k:
+                occurrenceSet.add(num)
+            
+            minOperations += 1
+
+            if len(occurrenceSet) == k:
+                break
+        
+        return minOperations
