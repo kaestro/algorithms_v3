@@ -4,15 +4,18 @@ from typing import List
 
 class Solution:
     def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
-        dict_str_idx_sum = {word: idx for idx, word in enumerate(list1)}
-        visited_str = set()
+        min_idx_sum = float('inf')
+        common_restaurants = []
 
-        for idx, word in enumerate(list2):
-            if word in dict_str_idx_sum:
-                dict_str_idx_sum[word] += idx
-                visited_str.add(word)
+        dict_str_idx = {list1[i]: i for i in range(len(list1))}
+
+        for idx, restaurant in enumerate(list2):
+            if restaurant in dict_str_idx:
+                idx_sum = idx + dict_str_idx[restaurant]
+                if idx_sum < min_idx_sum:
+                    min_idx_sum = idx_sum
+                    common_restaurants = [restaurant]
+                elif idx_sum == min_idx_sum:
+                    common_restaurants.append(restaurant)
         
-        dict_str_idx_sum = {k: v for k, v in dict_str_idx_sum.items() if k in visited_str}
-        min_idx_sum = min(dict_str_idx_sum.values())
-
-        return [k for k, v in dict_str_idx_sum.items() if v == min_idx_sum]
+        return common_restaurants
