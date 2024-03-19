@@ -21,7 +21,6 @@ class Solution:
     # 그러면 dp로 isIncreasing을 구해두면 될듯?
     def incremovableSubarrayCount(self, nums: List[int]) -> int:
         isIncreasingSubarray = {(0, -1): True, (len(nums), len(nums) - 1): True}        
-        checkedSubarrays = set()
         result = 0
 
         for i in range(len(nums)):
@@ -30,17 +29,19 @@ class Solution:
         
         for i in range(len(nums)):
             for j in range(i, len(nums)):
-                subarray_str = ','.join(map(str, nums[i:j + 1]))
-                if subarray_str not in checkedSubarrays and isIncreasingSubarray.get((0, i - 1), True) and isIncreasingSubarray.get((j + 1, len(nums) - 1), True):
-                    result += 1
-                    checkedSubarrays.add(subarray_str)
+                if isIncreasingSubarray.get((0, i - 1), True) and isIncreasingSubarray.get((j + 1, len(nums) - 1), True):
+                    if nums[j+1] > nums[i-1] if i > 0 and j < len(nums) - 1 else True:
+                        result += 1
 
         return result
     
     # [start, end] 사이의 subarray가 증가하는 순서인지 확인한다.
     def isIncreasing(self, nums: List[int], start: int, end: int) -> bool:
         for i in range(start, end):
-            if nums[i] > nums[i+1]:
+            if nums[i] >= nums[i+1]:
                 return False
         return True
     
+
+if __name__ == "__main__":
+    Solution().incremovableSubarrayCount([8, 7, 6, 6])
