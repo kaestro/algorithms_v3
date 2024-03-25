@@ -34,3 +34,18 @@ class Solution:
                 row_idx, col_idx = row_idx + 1, col_idx + 1
 
         return is_toeplitz
+    
+    # matrix의 모든 값을 저장하지 않고, 맨 처음 row와 column의 값을 저장한다.
+    # list를 순회하면서 첫 row와 column의 값과 비교한다.
+    # memory 사용량 0.4MB 감소 => 매트릭스의 크기가 커질수록 차이가 더 커질 것으로 예상된다.
+    # [improve tip] key로 (i, j)가 아니라 (i - j)를 사용하는 방법도 있다.
+    def improvedIsToeplitzMatrix(self, matrix: List[List[int]]) -> bool:
+        matrix_dict = {(i, j) : matrix[i][j] for i in range(len(matrix)) for j in range(len(matrix[0])) if i == 0 or j == 0}
+
+        for i in range(1, len(matrix)):
+            for j in range(1, len(matrix[0])):
+                row_idx, col_idx = i - min(i, j), j - min(i, j)
+                if matrix_dict[(row_idx, col_idx)] != matrix[i][j]:
+                    return False
+        
+        return True
