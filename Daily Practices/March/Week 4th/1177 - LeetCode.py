@@ -1,7 +1,7 @@
 # https://leetcode.com/problems/can-make-palindrome-from-substring/description/
 
 from typing import List
-from collections import Counter
+from collections import defaultdict
 
 class Solution:
     # query = [left, right, k]
@@ -13,19 +13,25 @@ class Solution:
 
         result = []
 
-        def not_palindrome_count(substr: str) -> int:
+        char_counter_by_range = {}
+        for i in range(len(input_str)):
+            char_counter = defaultdict(int)
+            for j in range(i, len(input_str)):
+                char_counter[input_str[j]] += 1
+                char_counter_by_range[(i, j)] = char_counter.copy()
+
+        def not_palindrome_count(char_counter) -> int:
             result = 0
-            char_count = Counter(substr)
-            for char, count in char_count.items():
+            for count in char_counter.values():
                 if count % 2 != 0:
                     result += 1
             result //= 2
             return result
-
+        
         for query in queries:
             left, right, k = query
-            substr = input_str[left:right+1]
-            if not_palindrome_count(substr) <= k:
+            char_counter = char_counter_by_range[(left, right)]
+            if not_palindrome_count(char_counter) <= k:
                 result.append(True)
             else:
                 result.append(False)
