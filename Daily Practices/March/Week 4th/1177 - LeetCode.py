@@ -2,6 +2,7 @@
 
 from typing import List
 from collections import defaultdict
+from collections import Counter
 
 class Solution:
     # query = [left, right, k]
@@ -13,12 +14,9 @@ class Solution:
 
         result = []
 
-        char_counter_by_range = {}
-        for i in range(len(input_str)):
-            char_counter = defaultdict(int)
-            for j in range(i, len(input_str)):
-                char_counter[input_str[j]] += 1
-                char_counter_by_range[(i, j)] = char_counter.copy()
+        char_count_until_i = [Counter()]
+        for i in range(1, len(input_str) + 1):
+            char_count_until_i.append(char_count_until_i[i - 1] + Counter(input_str[i - 1]))
 
         def not_palindrome_count(char_counter) -> int:
             result = 0
@@ -30,11 +28,9 @@ class Solution:
         
         for query in queries:
             left, right, k = query
-            char_counter = char_counter_by_range[(left, right)]
-            if not_palindrome_count(char_counter) <= k:
-                result.append(True)
-            else:
-                result.append(False)
+            char_counter = char_count_until_i[right + 1] - char_count_until_i[left]
+            needed_change_count = sum(v % 2 for v in char_counter.values()) // 2
+            result.append(not_palindrome_count(char_counter) <= k)
 
         return result
 
