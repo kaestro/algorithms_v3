@@ -12,25 +12,16 @@ class Solution:
     # rearrange에 대해 생각하지 못함
     def canMakePaliQueries(self, input_str: str, queries: List[List[int]]) -> List[bool]:
 
-        result = []
-
-        char_count_until_i = [Counter()]
+        N = 26
+        a_int = ord('a')
+        dp = [[0] * N]
         for i in range(1, len(input_str) + 1):
-            char_count_until_i.append(char_count_until_i[i - 1] + Counter(input_str[i - 1]))
+            dp.append(dp[i-1][:])
+            dp[i][ord(input_str[i-1]) - a_int] ^= 1
 
-        def not_palindrome_count(char_counter) -> int:
-            result = 0
-            for count in char_counter.values():
-                if count % 2 != 0:
-                    result += 1
-            result //= 2
-            return result
-        
-        for query in queries:
-            left, right, k = query
-            char_counter = char_count_until_i[right + 1] - char_count_until_i[left]
-            needed_change_count = sum(v % 2 for v in char_counter.values()) // 2
-            result.append(not_palindrome_count(char_counter) <= k)
+        result = []
+        for left, right, k in queries:
+            result.append(sum((dp[right+1][i] ^ dp[left][i]) for i in range(N) ) // 2 <= k)
 
         return result
 
