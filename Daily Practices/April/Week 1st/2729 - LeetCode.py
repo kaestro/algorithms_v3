@@ -3,9 +3,9 @@
 class Solution:
     def isFascinating(self, n: int) -> bool:
         concat_num = str(n) + str(n * 2) + str(n * 3)
-        bitsum = 0
+        bitsum, ord_zero = 0, ord('0')
 
         for digit in concat_num:
-            bitsum += 1 << int(digit)
+            bitsum += 1 << ord(digit) - ord_zero
 
-        return bitsum == bin(2**9 - 1) * 2
+        return bitsum == 2 ** 10 - 2
