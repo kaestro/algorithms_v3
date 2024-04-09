@@ -21,3 +21,17 @@ class Solution:
                     result = max(result, nums[i] ^ nums[j])
 
         return result
+    
+    # Key Point
+    # 둘의 차가 작은 값보다 작거나 같으려면, 둘 중 큰 값이 작은 값의 2배보다 작거나 같아야 함.
+    def improvedSolution(self, nums: List[int]) -> int:
+        result = 0
+
+        nums = sorted(set(nums))
+
+        for idx, x in enumerate(nums):
+            for y in nums[idx + 1:]:
+                if y <= 2 * x:
+                    result = max(result, x ^ y)
+
+        return result
