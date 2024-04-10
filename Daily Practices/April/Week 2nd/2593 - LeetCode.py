@@ -1,7 +1,6 @@
 # https://leetcode.com/problems/find-score-of-an-array-after-marking-all-elements/description/
 
 from typing import List
-from heapq import heappop, heapify
 
 # 1. choose smallest element
 # 2. if there are multiple smallest elements, choose the one with the smallest index
@@ -19,22 +18,19 @@ class Solution:
     # Question: Do I need to remove the element from heap_nums?
     def findScore(self, nums: List[int]) -> int:
         result = 0
+        
+        sorted_nums = sorted([(num, idx) for idx, num in enumerate(nums)])
 
-        heap_nums = [(num, idx) for idx, num in enumerate(nums)]
-        heapify(heap_nums)
-
-        while heap_nums:
-            num, idx = heappop(heap_nums)
+        for num, idx in sorted_nums:
+            if nums[idx] == -1:
+                continue
 
             result += num
-
-            if idx > 0 and (nums[idx - 1], idx - 1) in heap_nums:
-                heap_nums.remove((nums[idx - 1], idx - 1))
-            
-            if idx < len(nums) - 1 and (nums[idx + 1], idx + 1) in heap_nums:
-                heap_nums.remove((nums[idx + 1], idx + 1))
-            
-            heapify(heap_nums)
+            nums[idx] = -1
+            if idx > 0:
+                nums[idx-1] = -1
+            if idx < len(nums)-1:
+                nums[idx+1] = -1
 
         return result
 
