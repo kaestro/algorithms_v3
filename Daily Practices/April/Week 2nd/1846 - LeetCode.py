@@ -26,4 +26,42 @@ class Solution:
     def maximumElementAfterDecrementingAndRearranging(self, arr: List[int]) -> int:
         result = 0
 
+        # step 1: sort the array
+        arr.sort()
+
+        # step 2: gap을 찾는다.
+        soreted_set_arr = sorted(list(set(arr)))
+        self.findGap(soreted_set_arr)
+
         return result
+    
+    # distinct sorted array여야 한다
+    def findGap(self, arr: List[int]) -> List[set[int]]:
+        curr_num = 1
+        max_num = arr[-1]
+        result = []
+        curr_gap = (-1, -1)
+        idx_list = 0
+
+        while curr_num < max_num:
+            if curr_num == arr[idx_list]:
+                idx_list += 1
+                curr_num += 1
+                continue
+            
+            if curr_gap[0] == -1:
+                curr_gap = (idx_list, -1)
+            else:
+                while curr_num != arr[idx_list]:
+                    idx_list += 1
+                    curr_num += 1
+            
+            idx_list += 1
+            curr_num += 1
+        
+        return result
+
+
+if __name__ == "__main__":
+    sample = Solution()
+    print(sample.maximumElementAfterDecrementingAndRearranging([100,1,1000])) # 2
