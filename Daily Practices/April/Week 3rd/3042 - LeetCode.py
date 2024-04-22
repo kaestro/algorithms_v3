@@ -7,7 +7,7 @@ class Solution:
         result = 0
         for i in range(len(words)):
             for j in range(i + 1, len(words)):
-                if words[i].startswith(words[j]) and words[i].endswith(words[j]):
+                if words[j].startswith(words[i]) and words[j].endswith(words[i]):
                     result += 1
 
         return result
