@@ -25,7 +25,6 @@ class Solution:
 
     def decrementCount(self, ch: str, charCounter: dict) -> None:
         charCounter[ch] -= 1
-    
 
 if __name__ == "__main__":
     s = Solution()
