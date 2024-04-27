@@ -17,9 +17,9 @@ class Solution:
         return result
     
     def yzArea(self, gridHeights: List[List[int]]) -> int:
-        result = 0
+        result = sum(max(row) for row in gridHeights)
         return result
     
     def zxArea(self, gridHeights: List[List[int]]) -> int:
-        result = 0
+        result = sum(max(column) for column in zip(*gridHeights))
         return result
