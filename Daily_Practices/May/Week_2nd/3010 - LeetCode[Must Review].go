@@ -1,10 +1,10 @@
-package main
+package Week_2nd
 
 import (
 	"math"
 )
 
-func minimumCost(nums []int) int {
+func MinimumCost(nums []int) int {
 	n := len(nums)
 	if n < 3 {
 		return 0
