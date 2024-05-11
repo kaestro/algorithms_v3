@@ -14,7 +14,7 @@ type Building struct {
 func Main2296() {
 	n, buildings := GetBuildingInput()
 
-	ans := CalculateMaxProfit(n, buildings)
+	ans := MaxProfitFromBuildings(n, buildings)
 
 	fmt.Println(ans)
 }
@@ -31,23 +31,27 @@ func GetBuildingInput() (int, []Building) {
 	return n, buildings
 }
 
-func CalculateMaxProfit(n int, buildings []Building) int {
+func MaxProfitFromBuildings(n int, buildings []Building) int {
 	buildings = reorderBuildings(buildings)
 
-	dp := initializeDp(n, buildings)
-	ans := 0
-	for i := 0; i < n; i++ {
-		for j := 0; j < i; j++ {
-			if buildings[j].y < buildings[i].y {
-				dp[i][0] = max(dp[i][0], dp[j][0]+buildings[i].price)
-			} else if buildings[j].y > buildings[i].y {
-				dp[i][1] = max(dp[i][1], dp[j][1]+buildings[i].price)
-			}
+	dp, ans := initializeDp(n, buildings), 0
+	for i, buildingI := range buildings {
+		for j, buildingJ := range buildings[:i] {
+			dp = updateDp(dp, buildingJ, buildingI, i, j)
 		}
 		ans = max(ans, dp[i][0], dp[i][1])
 	}
 
 	return ans
+}
+
+func updateDp(dp [][]int, buildingJ, buildingI Building, i, j int) [][]int {
+	if buildingJ.y < buildingI.y {
+		dp[i][0] = max(dp[i][0], dp[j][0]+buildingI.price)
+	} else if buildingJ.y > buildingI.y {
+		dp[i][1] = max(dp[i][1], dp[j][1]+buildingI.price)
+	}
+	return dp
 }
 
 func initializeDp(n int, buildings []Building) [][]int {
