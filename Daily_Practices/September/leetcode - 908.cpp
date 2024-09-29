@@ -1,4 +1,3 @@
-// https://leetcode.com/problems/smallest-range-i/description/
 #include <vector>
 
 class Solution {
