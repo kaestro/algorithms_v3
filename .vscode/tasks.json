@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build active file",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-g",
+        "${file}",  // 현재 열려 있는 파일을 컴파일
+        "-o",
+        "${fileDirname}/main.exe"  // 결과 파일을 해당 파일의 디렉토리에 출력
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Generated task by VS Code."
+    }
+  ]
+}

@@ -25,6 +25,31 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "C++ Launch Active File",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/main.exe",  // 현재 파일이 있는 디렉토리에 있는 main.exe 실행
+            "args": [],  // 프로그램에 전달할 인자가 있으면 여기에 추가
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",  // 현재 파일이 있는 디렉토리를 작업 디렉토리로 설정
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe",  // gdb 경로 (Windows라면 gdb의 위치를 지정)
+            "setupCommands": [
+                {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build active file",  // 이전에 설정한 tasks.json의 build task 이름
+            "internalConsoleOptions": "openOnSessionStart",
+            "logging": {
+                "engineLogging": true
+            }
         }
     ]
 }
