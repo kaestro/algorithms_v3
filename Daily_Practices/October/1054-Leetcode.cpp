@@ -1,41 +1,41 @@
 #include <vector>
 #include <map>
+#include <queue>
+
+using namespace std;
 
 class Solution {
 public:
-    std::vector<int> rearrangeBarcodes(std::vector<int>& barcodes) {
-        if (barcodes.size() == 1) {
-            return barcodes;
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+
+        map<int, int>mp;
+        int n = barcodes.size();
+        vector<int>res(n);
+        priority_queue<pair<int, int>>pq;
+
+        for(const auto &i : barcodes){
+            mp[i]++;
         }
 
-        std::map<int, int> barcode_count;
-        for (int barcode : barcodes) {
-            barcode_count[barcode]++;
+        for(const auto &i : mp){
+            pq.push(make_pair(i.second, i.first)); // Freq, element
         }
 
-        auto it = barcode_count.begin();
+        int i = 0;
 
-        std::vector<int> result;
-        result.reserve(barcodes.size());
+        while(!pq.empty()){
 
-        while (it != barcode_count.end()) {
-            result.push_back(it->first);
-            it->second--;
-            if (it->second == 0) {
-                it = barcode_count.erase(it);
-                if (it == barcode_count.end() && !barcode_count.empty()) {
-                    it = barcode_count.begin();
-                }
-            } else {
-                if (it != barcode_count.begin()) {
-                    it--;
-                } else {
-                    it++;
-                }
+            auto temp = pq.top();
+            pq.pop();
+
+            while(temp.first--){
+                if(i >= n) i = 1;
+                res[i] = temp.second;
+                i += 2;
             }
         }
 
-        return result;
+        return res;
     }
 };
 
