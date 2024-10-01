@@ -1,55 +1,31 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
+  "configurations": [
+    {
+      "name": "C/C++: g++.exe build and debug active file",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:\\msys64\\ucrt64\\bin\\gdb.exe",
+      "setupCommands": [
         {
-            "name": "Attach to Chrome",
-            "port": 9222,
-            "request": "attach",
-            "type": "chrome",
-            "webRoot": "${workspaceFolder}"
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
         },
         {
-            "name": "python: Current File",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Launch Package",
-            "type": "go",
-            "request": "launch",
-            "mode": "auto",
-            "program": "${fileDirname}",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "C++ Launch Active File",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${fileDirname}/main.exe",  // 현재 파일이 있는 디렉토리에 있는 main.exe 실행
-            "args": [],  // 프로그램에 전달할 인자가 있으면 여기에 추가
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",  // 현재 파일이 있는 디렉토리를 작업 디렉토리로 설정
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe",  // gdb 경로 (Windows라면 gdb의 위치를 지정)
-            "setupCommands": [
-                {
-                "description": "Enable pretty-printing for gdb",
-                "text": "-enable-pretty-printing",
-                "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "build active file",  // 이전에 설정한 tasks.json의 build task 이름
-            "internalConsoleOptions": "openOnSessionStart",
-            "logging": {
-                "engineLogging": true
-            }
+          "description": "Set Disassembly Flavor to Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
         }
-    ]
+      ],
+      "preLaunchTask": "C/C++: g++.exe build active file"
+    }
+  ],
+  "version": "2.0.0"
 }
